@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Employee Management System')}"></head>
+<body>
+<h1>Employee Management System</h1>
+<div th:replace="~{fragments :: alerts}"></div>
+
+<!-- CREATE FORM -->
+<form th:action="@{/employees}" th:object="${employee}" method="post">
+    <div>
+        <label>Full Name</label>
+        <input type="text" th:field="*{fullName}">
+        <span class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="text" th:field="*{email}">
+        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    </div>
+    <div>
+        <label>Phone</label>
+        <input type="text" th:field="*{phone}">
+        <span class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+    </div>
+    <div>
+        <label>Department</label>
+        <input type="text" th:field="*{department}">
+        <span class="error" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></span>
+    </div>
+    <div>
+        <label>Salary</label>
+        <input type="number" step="0.01" th:field="*{salary}">
+        <span class="error" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></span>
+    </div>
+    <button type="submit">Save Employee</button>
+</form>
+
+<!-- TASK 11: SEARCH -->
+<form th:action="@{/employees}" method="get" class="search">
+    <input type="text" name="keyword" th:value="${keyword}" placeholder="Search by name...">
+    <button type="submit">Search</button>
+    <a th:href="@{/employees}">Clear</a>
+</form>
+
+<!-- READ TABLE -->
+<p>Total employees: <span th:text="${#lists.size(employees)}">0</span></p>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th><th>Full Name</th><th>Email</th><th>Phone</th>
+        <th>Department</th><th>Salary</th><th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="emp : ${employees}">
+        <td th:text="${emp.id}"></td>
+        <td th:text="${emp.fullName}"></td>
+        <td th:text="${emp.email}"></td>
+        <td th:text="${emp.phone}"></td>
+        <td th:text="${emp.department}"></td>
+        <td th:text="${emp.salary}"></td>
+        <td>
+            <a th:href="@{/employees/{id}/edit(id=${emp.id})}">Edit</a>
+            <form th:action="@{/employees/{id}/delete(id=${emp.id})}" method="post"
+                  style="display:inline"
+                  onsubmit="return confirm('Delete this employee?');">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(employees)}">
+        <td colspan="7">No employees found.</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
