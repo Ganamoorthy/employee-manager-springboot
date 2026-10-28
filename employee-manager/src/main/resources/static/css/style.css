@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 24px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 16px;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background: #f2f2f2;
+}
+
+.error {
+    color: #c00;
+    font-size: 0.85em;
+    display: block;
+}
+
+.alert-success {
+    background: #d4edda;
+    padding: 8px;
+}
+
+.alert-error {
+    background: #f8d7da;
+    padding: 8px;
+}
+
+form div {
+    margin-bottom: 8px;
+}
